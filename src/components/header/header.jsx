@@ -30,9 +30,6 @@ function Header() {
           </Link>
         )}
 
-        {/* <Link className="option" to="/login">
-          {user.currentUser ? "Login" : "Logout"}
-        </Link> */}
         <Link className="option" to="/about">
           About
         </Link>
