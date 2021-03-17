@@ -8,6 +8,7 @@ import About from "./pages/about/about";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { useStateValue } from "./StateProvider";
 import { userActionTypes } from "./reducers/user/user.types";
+import Footer from "./components/footer/footer";
 function App() {
   const [{ user }, dispatch] = useStateValue();
   useEffect(() => {
@@ -34,7 +35,6 @@ function App() {
       }
     });
   }, []);
-  console.log("user-----------", user, "auth", auth);
   return (
     <div className="App">
       <Router>
@@ -46,6 +46,7 @@ function App() {
           <Route exact path="/" component={Homepage}></Route>
         </Switch>
       </Router>
+      <Footer />
     </div>
   );
 }
