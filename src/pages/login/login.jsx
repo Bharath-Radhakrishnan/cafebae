@@ -1,7 +1,13 @@
 import React from "react";
 import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { Redirect } from "react-router-dom";
+import { useStateValue } from "../../StateProvider";
 
 function Login() {
+  const [{ user }] = useStateValue();
+  if (user.currentUser) {
+    return <Redirect to={"/"} />;
+  }
   return (
     <div className="login">
       <h1>Join Bae.Area Club</h1>
