@@ -5,40 +5,44 @@ import { auth } from "../../firebase/firebase.utils";
 import "./header.scss";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { Link } from "react-router-dom";
 
 function Header(props) {
   const [{ user }] = useStateValue();
   return (
     <div className="header">
-      <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
-        <Navbar.Brand href="/">Bae.Area Club</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/about">About</Nav.Link>
-            <Nav.Link href="/about">Features</Nav.Link>
-            <Nav.Link href="/about">Contact Us</Nav.Link>
-          </Nav>
-          <Nav>
-            {user?.currentUser ? (
-              <Navbar.Text>
-                Signed in as:{" "}
-                <span
-                  onClick={() => {
-                    auth.signOut();
-                  }}
-                  className="sign-out"
-                >
-                  {user?.currentUser?.displayName}
-                </span>
-              </Navbar.Text>
-            ) : (
-              <Nav.Link href="/login">Sign In</Nav.Link>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <Link to="/" className="logo-container">
+        <Logo className="logo" />
+      </Link>
+      <div className="options">
+        <Link className="option" to="/">
+          HOME
+        </Link>{" "}
+        <Link className="option" to="/about">
+          ABOUT US
+        </Link>{" "}
+        <Link className="option" to="/about">
+          FEATURES
+        </Link>
+        <Link className="option" to="/about">
+          CONTACT US
+        </Link>
+        {user?.currentUser ? (
+          <div
+            className="option"
+            onClick={() => {
+              auth.signOut();
+            }}
+          >
+            SIGN OUT
+          </div>
+        ) : (
+          <Link className="option" to="/login">
+            SIGN IN
+          </Link>
+        )}
+        <p>{user?.currentUser?.displayName}</p>
+      </div>
     </div>
   );
 }
