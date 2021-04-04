@@ -1,0 +1,19 @@
+.registration-container {
+  .input-form {
+    justify-content: center;
+    .name {
+      display: grid;
+      justify-content: center;
+      input {
+        width: 30vw;
+        margin: 0.5rem;
+      }
+    }
+  }
+  .gender-selection {
+    display: inline;
+    input {
+      width: 5vw;
+    }
+  }
+}
