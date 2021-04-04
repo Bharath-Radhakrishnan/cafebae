@@ -6,7 +6,7 @@ import { useStateValue } from "../../StateProvider";
 function Login() {
   const [{ user }] = useStateValue();
   if (user.currentUser) {
-    return <Redirect to={"/"} />;
+    return <Redirect to={"/dashboard"} />;
   }
   return (
     <div className="login">
