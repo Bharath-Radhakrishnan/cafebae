@@ -1,30 +1,50 @@
 import React, { useState } from "react";
 import "./custom-radio-button.scss";
+const items = [
+  { id: 1, value: "Male" },
+  {
+    id: 2,
+    value: "Female",
+  },
+  {
+    id: 3,
+    value: "Other",
+  },
+];
 function CustomRadioButton() {
   const [selected, setSelected] = useState("");
   const handleClick = (e) => {
     const { name } = e.target;
     setSelected(name);
-    console.log("clicked", e.target, name);
-    console.log({ selected });
   };
 
-  const style = {
-    boxShadow:
-      "inset 0 0 0 4px #1597ff, 0 15px 15px -10px rgba(darken(#1597ff, 10%), 0.375)",
-  };
   return (
     <div className="radio-buttons">
-      <input type="radio" id="fat" name="fat" onClick={handleClick} />
-      <input type="radio" id="fit" name="fit" onClick={handleClick} />
-      <input type="radio" id="other" name="other" onClick={handleClick} />
+      <div>
+        {items.map((item) => {
+          return (
+            <input
+              type="radio"
+              id={item.value}
+              name={item.value}
+              onClick={handleClick}
+            />
+          );
+        })}
+      </div>
 
       <div className="button-label-container">
-        <label for="fat" style={style}>
-          Male
-        </label>
-        <label for="fit">Female</label>
-        <label for="other">Other</label>
+        {items.map((item) => {
+          const isSelected = selected === item.value;
+          return (
+            <label
+              for={item.value}
+              className={`${isSelected ? "is-selected" : ""}`}
+            >
+              {item.value}
+            </label>
+          );
+        })}
       </div>
     </div>
   );
