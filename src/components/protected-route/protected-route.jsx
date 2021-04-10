@@ -1,20 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect, Route } from "react-router";
 import { auth } from "../../firebase/firebase.utils";
+import Loader from "react-loader-spinner";
 import { useStateValue } from "../../StateProvider";
+import AuthenticationService from "../../services/authenticationservice";
 
 function ProtectedRoute({ component: Component, ...rest }) {
-  const [{ user }, dispatch] = useStateValue();
-  let isAuthenticated;
-
-  const getUser = async () => {
-    console.log(user);
-    let val = await user?.currentUser;
-    return val;
-  };
-  useEffect(() => {
-    isAuthenticated = getUser();
-  }, []);
+  const isAuthenticated = AuthenticationService.getUserCredentials() !== null;
   return (
     <Route
       {...rest}
