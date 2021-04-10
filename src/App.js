@@ -4,9 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { useStateValue } from "./StateProvider";
 import { userActionTypes } from "./reducers/user/user.types";
+//----------------Services------------------------------
+import AuthenticationService from "./services/authenticationservice";
 //------------Stylesheet--------------------------------
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 //---------------Components-------------------------
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -35,6 +38,7 @@ function App() {
               },
             },
           });
+          AuthenticationService.saveCredentials(snapShot.data());
         });
       } else {
         dispatch({
@@ -49,8 +53,16 @@ function App() {
       <Router>
         <Header />
         <Switch>
-          <Route exact path="/register1" component={Registration1}></Route>
-          <Route exact path="/dashboard" component={Dashboard}></Route>
+          <ProtectedRoute
+            exact
+            path="/register1"
+            component={Registration1}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/dashboard"
+            component={Dashboard}
+          ></ProtectedRoute>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/about" component={About}></Route>
           <Route exact path="/" component={Homepage}></Route>
