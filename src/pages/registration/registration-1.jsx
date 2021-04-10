@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import FormatDate from "../../services/dateservice";
+import Loader from "react-loader-spinner";
 import "./registration.scss";
 function Registration1() {
   const items = ["Male", "Female", "Other"];
@@ -54,6 +55,9 @@ function Registration1() {
           onClick={handleClick}
         />
       </form>
+      <div>
+        <button>Next</button>
+      </div>
     </div>
   );
 }
