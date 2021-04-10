@@ -3,9 +3,8 @@ import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { useStateValue } from "../../StateProvider";
 import { auth } from "../../firebase/firebase.utils";
 import "./header.scss";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
+import AuthenticationService from "../../services/authenticationservice";
 
 function Header(props) {
   const [{ user }] = useStateValue();
@@ -21,8 +20,8 @@ function Header(props) {
         <Link className="option" to="/about">
           ABOUT US
         </Link>{" "}
-        <Link className="option" to="/about">
-          FEATURES
+        <Link className="option" to="/dashboard">
+          DASHBOARD
         </Link>
         <Link className="option" to="/about">
           CONTACT US
@@ -31,6 +30,7 @@ function Header(props) {
           <div
             className="option"
             onClick={() => {
+              AuthenticationService.logout();
               auth.signOut();
             }}
           >
