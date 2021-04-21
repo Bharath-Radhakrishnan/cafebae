@@ -2,11 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 // import { Loader, Dimmer, Segment, Image } from "semantic-ui-react";
 import Loader from "react-loader-spinner";
-
-import AuthenticationService from "../../services/authenticationservice";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { firestore, auth } from "../../firebase/firebase.utils";
 
 function Dashboard(props) {
-  const isRegistered = AuthenticationService.getUserCredentials().isRegistered;
+  const [user] = useAuthState(auth);
+  const [userSnapshot, load, error] = useDocument(
+    firestore.collection("users").doc(user.uid)
+  );
+  const isRegistered = userSnapshot?.data().isRegistered;
+  if (load) return <h1>Loading</h1>;
   if (isRegistered) {
     return (
       <div>
