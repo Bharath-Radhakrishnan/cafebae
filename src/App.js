@@ -38,7 +38,6 @@ function App() {
               },
             },
           });
-          AuthenticationService.saveCredentials(snapShot.data());
         });
       } else {
         dispatch({
