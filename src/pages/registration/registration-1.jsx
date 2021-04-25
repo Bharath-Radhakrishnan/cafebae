@@ -3,31 +3,63 @@ import CustomRadioButton from "../../components/custom-radio-button/custom-radio
 import FormatDate from "../../services/dateservice";
 import Loader from "react-loader-spinner";
 import "./registration.scss";
+import { useStateValue } from "../../StateProvider";
+import { registerActionTypes } from "../../reducers/register/register.types";
+import { useHistory } from "react-router";
 function Registration1() {
+  const [{ register }, dispatch] = useStateValue();
+  const history = useHistory();
   const items = ["Male", "Female", "Other"];
-  const [data, setData] = useState({});
+  //-------------State-Variables--------------------------
+  const [data, setData] = useState({ name: "", dob: "" });
   const [selected, setSelected] = useState("");
+
+  //--------Methods-------------------
   const handleChange = (e) => {
     const { name, value } = e.target;
 
     setData((prevState) => {
       if (name === "") {
         let date = FormatDate(value);
-        console.log(date);
         return { ...prevState, dob: date };
       } else return { ...prevState, [name]: value };
     });
   };
-  const handleClick = (e) => {
+  const handleSelection = (e) => {
     const { name } = e.target;
     setSelected(name);
   };
-  console.log(data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isValid = validate();
+    if (isValid) {
+      dispatch({
+        type: registerActionTypes.ADD_REGISTER_DATA,
+        payload: {
+          userName: name,
+          dob: dob,
+          gender: selected,
+        },
+      });
+      history.push("/register2");
+    }
+  };
   const { name, dob } = data;
+
+  const validate = () => {
+    const { name, dob } = data;
+    let isValid = true;
+    if (name === "") isValid = false;
+    if (dob === "") isValid = false;
+    if (selected === "") isValid = false;
+    return isValid;
+  };
+
+  //-----------Render----------------------
   return (
     <div className="registration-container">
       <h1>Let's Start with the Basics</h1>
-      <form className="input-form">
+      <form className="input-form" onSubmit={handleSubmit}>
         <div className="name">
           <label htmlFor="name">What is your name?</label>
           <input
@@ -52,12 +84,10 @@ function Registration1() {
         <CustomRadioButton
           items={items}
           selected={selected}
-          onClick={handleClick}
+          onClick={handleSelection}
         />
-      </form>
-      <div>
         <button>Next</button>
-      </div>
+      </form>
     </div>
   );
 }
