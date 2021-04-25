@@ -19,6 +19,7 @@ import Login from "./pages/login/login";
 import About from "./pages/about/about";
 import Dashboard from "./pages/dashboard/dashboard";
 import Registration1 from "./pages/registration/registration-1";
+import Registration2 from "./pages/registration/registration-2";
 import ProtectedRoute from "./components/protected-route/protected-route";
 
 function App() {
@@ -56,6 +57,11 @@ function App() {
             exact
             path="/register1"
             component={Registration1}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/register2"
+            component={Registration2}
           ></ProtectedRoute>
           <ProtectedRoute
             exact
