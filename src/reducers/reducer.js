@@ -1,11 +1,14 @@
+import { registerActionTypes } from "./register/register.types";
 import { userActionTypes } from "./user/user.types";
 
 export const initialState = {
   // basket: [],
   user: { currentUser: null },
+  register: {},
 };
 
 const reducer = (state, action) => {
+  console.log({ state, action });
   switch (action.type) {
     // case "ADD_TO_BASKET":
     //   return { ...state, basket: [...state.basket, action.item] };
@@ -28,6 +31,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case registerActionTypes.ADD_REGISTER_DATA:
+      return {
+        ...state,
+        register: action.payload,
       };
   }
 };
