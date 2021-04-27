@@ -18,9 +18,13 @@ import Homepage from "./pages/homepage/homepage";
 import Login from "./pages/login/login";
 import About from "./pages/about/about";
 import Dashboard from "./pages/dashboard/dashboard";
+import ProtectedRoute from "./components/protected-route/protected-route";
+
 import Registration1 from "./pages/registration/registration-1";
 import Registration2 from "./pages/registration/registration-2";
-import ProtectedRoute from "./components/protected-route/protected-route";
+import Registration3 from "./pages/registration/registration-3";
+import Registration4 from "./pages/registration/registration-4";
+import Registration5 from "./pages/registration/registration-5";
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -62,6 +66,21 @@ function App() {
             exact
             path="/register2"
             component={Registration2}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/register3"
+            component={Registration3}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/register4"
+            component={Registration4}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            exact
+            path="/register5"
+            component={Registration5}
           ></ProtectedRoute>
           <ProtectedRoute
             exact
