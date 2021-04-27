@@ -66,7 +66,7 @@ function Registration3() {
             placeholder="ex: product consultant"
             name="occupation"
             id="occupation"
-            value={nativePlace}
+            value={occupation}
             onChange={handleChange}
           />
           <h4>Popular Choices</h4>
