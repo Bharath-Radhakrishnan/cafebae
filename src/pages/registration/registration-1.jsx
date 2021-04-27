@@ -11,7 +11,7 @@ function Registration1() {
   const history = useHistory();
   const items = ["Male", "Female", "Other"];
   //-------------State-Variables--------------------------
-  const [data, setData] = useState({ name: "", dob: "" });
+  const [{ name, dob }, setData] = useState({ name: "", dob: "" });
   const [selected, setSelected] = useState("");
 
   //--------Methods-------------------
@@ -44,10 +44,8 @@ function Registration1() {
       history.push("/register2");
     }
   };
-  const { name, dob } = data;
 
   const validate = () => {
-    const { name, dob } = data;
     let isValid = true;
     if (name === "") isValid = false;
     if (dob === "") isValid = false;
