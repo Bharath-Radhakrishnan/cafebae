@@ -4,13 +4,13 @@ function CustomRadioButton({ items, selected, onClick }) {
   return (
     <div className="radio-buttons">
       <div>
-        {items.map((item, index) => {
+        {items.map(({label,value}, index) => {
           return (
             <input
               key={index}
               type="radio"
-              id={item}
-              name={item}
+              id={label}
+              value={value}
               onClick={onClick}
             />
           );
@@ -18,15 +18,15 @@ function CustomRadioButton({ items, selected, onClick }) {
       </div>
 
       <div className="button-label-container">
-        {items.map((item, index) => {
-          const isSelected = selected === item;
+        {items.map(({label,value}, index) => {
+          const isSelected = parseInt(selected) === value;
           return (
             <label
               key={index}
-              htmlFor={item}
+              htmlFor={label}
               className={`${isSelected ? "is-selected" : ""}`}
             >
-              {item}
+              {label}
             </label>
           );
         })}
