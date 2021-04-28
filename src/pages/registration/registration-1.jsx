@@ -9,7 +9,7 @@ import { useHistory } from "react-router";
 function Registration1() {
   const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
-  const items = ["Male", "Female", "Other"];
+  const items = [{label:"Male",value:"Male"}, {label:"Female",value:"Female"}, {label:"Other",value:"Other"}];
   //-------------State-Variables--------------------------
   const [{ name, dob }, setData] = useState({ name: "", dob: "" });
   const [selected, setSelected] = useState("");
