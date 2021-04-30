@@ -77,7 +77,7 @@ function Registration4() {
             onChange={handleChange}
           />
         </div>
-        <button>Submit</button>
+        <button>next</button>
       </form>
     </div>
   );
