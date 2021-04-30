@@ -4,15 +4,23 @@ import { useStateValue } from "../../StateProvider";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import genderList from "../../data/gender";
 import { useState } from "react";
+import { registerActionTypes } from "../../reducers/register/register.types";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { auth, firestore } from "../../firebase/firebase.utils";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Registration5() {
+
+//----------------------Hooks---------------------------------
   const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
-  const items = genderList
+  const [user] = useAuthState(auth);
+  // const [userSnapshot, loading, error] = useCollection( firestore.collection("users").doc(user.uid));
+  const items = genderList;
+//-------------------State-Variables-------------------------
   const [{age,occupation},setData] = useState({age:"",occupation:""})
-
   const [selected,setSelected] = useState("")
-  const handleSubmit=()=>{}
+//--------------------Methods--------------------------------
   const handleSelection=(e)=>{
     const {value } = e.target;
     setSelected(value);
@@ -21,6 +29,52 @@ function Registration5() {
     const {name,value}=e.target;
     setData(prevState=>({...prevState,[name]:value}))
   }
+
+  const handleSubmit=(e)=>{
+    e.preventDefault()
+    const isValid = validate();
+    if (isValid) {
+      // dispatch({
+      //   type: registerActionTypes.ADD_REGISTER_DATA,
+      //   payload: {
+      //     agePreference: age,
+      //     occupationPreference: occupation,
+      //     genderPreference: selected,
+      //   },
+      // });
+      let data = register
+      data = {...data,
+                agePreference: age,
+                occupationPreference: occupation,
+                genderPreference: selected,
+              }
+      postData(data)
+      history.push("/dashboard");
+    }
+  }
+  const validate = () => {
+    let isValid = true;
+    if (age === "") isValid = false;
+    if (occupation === "") isValid = false;
+    if (selected === "") isValid = false;
+    return isValid;
+  };
+
+  const postData = async(data)=>{
+    const uid = auth.currentUser.uid
+    const userRef = firestore.doc(`/users/${uid}`);
+    const snapShot = await userRef.get();
+    if (snapShot.exists) {
+      try {
+        await userRef.set({
+         ...data,
+         isRegistered:true
+        },{merge:true});
+      } catch (e) {
+        console.log("error creating user", e.message);
+      }
+    }
+  }
   return <div className="registration-container">
           <h1>Your Preferences</h1>
          <form className="input-form" onSubmit={handleSubmit}>
@@ -28,6 +82,8 @@ function Registration5() {
           <label htmlFor="age">Age</label>
           <input
             type="number"
+            min="18"
+            max="100"
             placeholder="age"
             name="age"
             id="age"
