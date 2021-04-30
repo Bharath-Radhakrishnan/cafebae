@@ -6,10 +6,11 @@ import "./registration.scss";
 import { useStateValue } from "../../StateProvider";
 import { registerActionTypes } from "../../reducers/register/register.types";
 import { useHistory } from "react-router";
+import genderList from "../../data/gender";
 function Registration1() {
   const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
-  const items = [{label:"Male",value:1}, {label:"Female",value:2}, {label:"Other",value:3}];
+  const items = genderList;
   //-------------State-Variables--------------------------
   const [{ name, dob }, setData] = useState({ name: "", dob: "" });
   const [selected, setSelected] = useState("");

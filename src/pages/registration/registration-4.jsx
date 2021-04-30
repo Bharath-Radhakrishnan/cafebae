@@ -4,16 +4,11 @@ import { useStateValue } from "../../StateProvider";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import { useState } from "react";
 import { registerActionTypes } from "../../reducers/register/register.types";
+import settlementList from "../../data/settlement";
 
 function Registration4() {
   const [{ register }, dispatch] = useStateValue();
-  const items = [
-    {label:"6 months",value:1 },
-    {label:"6 month - 1yr",value:2 },
-    {label:"1yr - 2yr",value:3 },
-    {label:"2+yrs",value:4 },
-    {label:"No plans as of now",value:5 }
-  ];
+  const items = settlementList
   const [selected, setSelected] = useState("");
   const [{availability,bio},setData]=useState({availability:"",bio:""})
   const history = useHistory();
