@@ -58,11 +58,12 @@
     display: inline;
     float: right;
     font-size: 18px;
-    a {
+    .options {
       display: inline-block;
       padding: 13px 10px 13px 10px;
       text-decoration: none;
       color: #efefef;
+      cursor: pointer;
       &:hover {
         background-color: rgba(0, 0, 0, 0.3);
       }
@@ -116,7 +117,7 @@
       overflow-y: hidden;
       top: 50px;
       left: 0px;
-      a {
+      .options {
         display: block;
         width: 100%;
       }
