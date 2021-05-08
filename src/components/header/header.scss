@@ -1,30 +1,142 @@
-.header {
-  height: 70px;
-  // width: 100%;
-  display: flex;
-  justify-content: space-between;
-  // margin-bottom: 25px;
-  padding: 0px 50px;
-  // background-color: brown;
-  .logo-container {
-    height: 100%;
-    // width: 70px;
-    padding: 25px 0;
-  }
+// .header {
+//   height: 70px;
+//   // width: 100%;
+//   display: flex;
+//   justify-content: space-between;
+//   // margin-bottom: 25px;
+//   padding: 0px 50px;
+//   // background-color: brown;
+//   .logo-container {
+//     height: 100%;
+//     // width: 70px;
+//     padding: 25px 0;
+//   }
 
-  .options {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+//   .options {
+//     width: 50%;
+//     height: 100%;
+//     display: flex;
+//     align-items: center;
+//     justify-content: flex-end;
 
-    .option {
-      padding: 10px 15px;
-      cursor: pointer;
+//     .option {
+//       padding: 10px 15px;
+//       cursor: pointer;
+//     }
+//   }
+//   // .sign-out {
+//   //   cursor: pointer;
+//   // }
+// }
+
+// * {
+//   box-sizing: border-box;
+// }
+
+// body {
+//   margin: 0px;
+//   font-family: "segoe ui";
+// }
+.nav {
+  height: 50px;
+  width: 100%;
+  background-color: #4d4d4d;
+  position: relative;
+  > .nav-header {
+    display: inline;
+    > .nav-title {
+      display: inline-block;
+      font-size: 22px;
+      color: #fff;
+      padding: 10px 10px 10px 10px;
     }
   }
-  // .sign-out {
-  //   cursor: pointer;
-  // }
+  > .nav-btn {
+    display: none;
+  }
+  > .nav-links {
+    display: inline;
+    float: right;
+    font-size: 18px;
+    > a {
+      display: inline-block;
+      padding: 13px 10px 13px 10px;
+      text-decoration: none;
+      color: #efefef;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+  > #nav-check {
+    display: none;
+  }
+}
+@media (max-width: 600px) {
+  .nav {
+    > .nav-btn {
+      display: inline-block;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      > label {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        padding: 13px;
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.3);
+        }
+        > span {
+          display: block;
+          width: 25px;
+          height: 10px;
+          border-top: 2px solid #eee;
+        }
+      }
+    }
+    #nav-check {
+      &:checked {
+        ~ {
+          .nav-btn {
+            > label {
+              background-color: rgba(0, 0, 0, 0.3);
+            }
+          }
+        }
+      }
+    }
+    > .nav-links {
+      position: absolute;
+      display: block;
+      width: 100%;
+      background-color: #333;
+      height: 0px;
+      transition: all 0.3s ease-in;
+      overflow-y: hidden;
+      top: 50px;
+      left: 0px;
+      > a {
+        display: block;
+        width: 100%;
+      }
+    }
+    > #nav-check {
+      &:not(:checked) {
+        ~ {
+          .nav-links {
+            height: 0px;
+          }
+        }
+      }
+      &:checked {
+        ~ {
+          .nav-links {
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+          }
+        }
+      }
+    }
+  }
 }
