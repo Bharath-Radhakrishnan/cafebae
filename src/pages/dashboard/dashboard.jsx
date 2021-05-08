@@ -9,31 +9,38 @@ import { firestore, auth } from "../../firebase/firebase.utils";
 function Dashboard(props) {
   const [user] = useAuthState(auth);
   const [userSnapshot, load, error] = useDocument(
-    firestore.collection("users").doc(user.uid)
+    firestore.collection("users").doc(user?.uid)
   );
   const isRegistered = userSnapshot?.data().isRegistered;
   if (load) return <h1>Loading</h1>;
   if (isRegistered) {
-    const {userName,email,gender,linkedInURL,phoneNo,occupation}=userSnapshot?.data()
+    const {
+      userName,
+      email,
+      gender,
+      linkedInURL,
+      phoneNo,
+      occupation,
+    } = userSnapshot?.data();
     return (
       <div>
         <h1>My Dashboard</h1>
         <table>
           <tbody>
             <tr>
-            <td>userName:{userName}</td>
+              <td>userName:{userName}</td>
             </tr>
             <tr>
-            <td>email:{email}</td>
+              <td>email:{email}</td>
             </tr>
             <tr>
-            <td>linkedin:{linkedInURL}</td>
+              <td>linkedin:{linkedInURL}</td>
             </tr>
             <tr>
-            <td>phoneno:{phoneNo}</td>
+              <td>phoneno:{phoneNo}</td>
             </tr>
             <tr>
-            <td>occupation:{occupation}</td>
+              <td>occupation:{occupation}</td>
             </tr>
           </tbody>
         </table>
