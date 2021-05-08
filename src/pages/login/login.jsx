@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { useStateValue } from "../../StateProvider";
 
+import "./login.scss";
 function Login() {
   const [{ user }] = useStateValue();
   const history = useHistory();
