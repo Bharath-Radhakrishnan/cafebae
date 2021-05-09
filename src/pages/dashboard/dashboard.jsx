@@ -5,7 +5,7 @@ import Loader from "react-loader-spinner";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { firestore, auth } from "../../firebase/firebase.utils";
-
+import "./dashboard.scss";
 function Dashboard(props) {
   const [user] = useAuthState(auth);
   const [userSnapshot, load, error] = useDocument(
@@ -23,7 +23,7 @@ function Dashboard(props) {
       occupation,
     } = userSnapshot?.data();
     return (
-      <div>
+      <div className="dashboard">
         <h1>My Dashboard</h1>
         <table>
           <tbody>
