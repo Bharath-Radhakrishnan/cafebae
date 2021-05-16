@@ -34,7 +34,7 @@
     .react-tabs__tab--selected {
       // background: #1c1d1f;
       // border-color: #1c1d1f;
-      border-color: none;
+      border-color: white;
       // border-left: 4px solid #6eb800;
       // padding-left: 21px;
 
@@ -50,8 +50,7 @@
 
     .react-tabs__tab-panel--selected {
       display: block;
-      border: none;
-      border-color: white !important;
+      border-color: none;
     }
 
     .panel-content {
