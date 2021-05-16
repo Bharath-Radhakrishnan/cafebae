@@ -29,10 +29,10 @@ function Dashboard(props) {
             <Tab>Account Preferences</Tab>
           </TabList>
 
-          <TabPanel>
+          <TabPanel className="custom-tab-panel">
             <Meetings />
           </TabPanel>
-          <TabPanel>
+          <TabPanel lassName="custom-tab-panel">
             <AccountSettings />
           </TabPanel>
         </Tabs>
