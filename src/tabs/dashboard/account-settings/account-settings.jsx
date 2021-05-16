@@ -21,8 +21,7 @@ function AccountSettings() {
   } = userSnapshot?.data();
   return (
     <div className="account-settings-container">
-      <h2>Any content 2</h2>
-      <Tabs>
+      <Tabs className="account-settings-tab">
         <TabList>
           <Tab>
             <p>Title 1</p>
