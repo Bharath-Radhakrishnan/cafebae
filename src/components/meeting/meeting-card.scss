@@ -1,8 +1,22 @@
 .meeting-card-container {
+  align-items: center;
+  border-radius: 3px;
+  padding: 10px;
   display: flex;
   margin-bottom: 2rem;
   background-color: bisque;
   div {
+    flex: 4;
+  }
+  .user-avatar-container {
     flex: 1;
+    .user-avatar {
+      margin: 1rem 0 1rem 2rem;
+      height: 60px;
+      width: 60px;
+    }
+  }
+  .user-data-container {
+    text-align: left;
   }
 }
