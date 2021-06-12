@@ -3,6 +3,8 @@ import { useStateValue } from "../../StateProvider";
 import { registerActionTypes } from "../../reducers/register/register.types";
 import { useHistory } from "react-router";
 import { useState } from "react";
+import isMobilePhone from "validator/es/lib/isMobilePhone";
+
 function Registration2() {
   const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
@@ -21,6 +23,7 @@ function Registration2() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
+    console.log(isValid);
     if (isValid) {
       dispatch({
         type: registerActionTypes.ADD_REGISTER_DATA,
@@ -35,7 +38,7 @@ function Registration2() {
   const validate = () => {
     let isValid = true;
     if (linkedInURL === "") isValid = false;
-    if (phoneNo === "") isValid = false;
+    if (phoneNo === "" || !isMobilePhone(phoneNo)) isValid = false;
     return isValid;
   };
   //--------Render---------------------
