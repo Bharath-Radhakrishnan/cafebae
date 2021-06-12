@@ -1,83 +1,78 @@
 import "./registration.scss";
 import { useHistory } from "react-router";
-import { useStateValue } from "../../StateProvider";
+import CustomInput from "../../components/custom-input/CustomInput";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
-import { useState } from "react";
-import { registerActionTypes } from "../../reducers/register/register.types";
+import { useState, useRef } from "react";
 import settlementList from "../../data/settlement";
-
+import NextButton from "../../components/next-button/NextButton";
+import { addUserData } from "../../firebase/firebase.utils";
 function Registration4() {
-  const [{ register }, dispatch] = useStateValue();
-  const items = settlementList
+  const items = settlementList;
   const [selected, setSelected] = useState("");
-  const [{availability,bio},setData]=useState({availability:"",bio:""})
+
+  const availabilityRef = useRef();
+  const bioRef = useRef();
   const history = useHistory();
-  console.log({ register });
 
   //------------------Methods---------------
   const handleSelection = (e) => {
-
-    const {value } = e.target;
+    const { value } = e.target;
     setSelected(value);
   };
 
-  const handleChange = (e)=>{
-    const {name,value} = e.target;
-    setData(prevState=>({...prevState,[name]:value}))
-  }
-  const handleSubmit=(e)=>{
-    e.preventDefault()
-    console.log({selected,availability,bio});
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const isValid = validate();
     if (isValid) {
-      dispatch({
-        type: registerActionTypes.ADD_REGISTER_DATA,
-        payload: {
-          settlementYear:selected,
-          availability,
-          bio,
-        },
-      });
-      history.push("/register5");
+      const availability = availabilityRef.current.value;
+      const bio = bioRef.current.value;
+      console.log({ selected, availability, bio });
+      const _data = {
+        settlementYear: selected,
+        availability,
+        bio,
+      };
+      try {
+        addUserData(_data);
+        history.push("/register5");
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   const validate = () => {
+    const availability = availabilityRef.current.value;
+    const bio = bioRef.current.value;
+
     let isValid = true;
-    if(selected==="") isValid = false;
-    if (availability === "") isValid = false;
-    if (bio === "") isValid = false;
+    if (selected === "") isValid = false;
+    if (!availability) isValid = false;
+    if (!bio) isValid = false;
     return isValid;
   };
   //-----------Render-----------------------
   return (
     <div className="registration-container">
       <form className="input-form" onSubmit={handleSubmit}>
-      <label>When do you plan to settle on</label>
-          <CustomRadioButton
-            items={items}
-            selected={selected}
-            onClick={handleSelection}
-          />
+        <label>When do you plan to settle on</label>
+        <CustomRadioButton
+          items={items}
+          selected={selected}
+          onClick={handleSelection}
+        />
         <div className="name">
-          <label htmlFor="availability">Your Availability?</label>
-          <input
+          <CustomInput
+            label="Your Availability?"
             type="text"
             placeholder="name"
             name="availability"
             id="availability"
-            value={availability}
-            onChange={handleChange}
+            ref={availabilityRef}
           />
           <label htmlFor="bio">About you</label>
-          <textarea
-            placeholder="bio"
-            name="bio"
-            id="bio"
-            value={bio}
-            onChange={handleChange}
-          />
+          <textarea placeholder="bio" name="bio" id="bio" ref={bioRef} />
         </div>
-        <button>next</button>
+        <NextButton />
       </form>
     </div>
   );
