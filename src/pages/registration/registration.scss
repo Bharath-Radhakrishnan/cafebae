@@ -1,14 +1,6 @@
 .registration-container {
   .input-form {
     justify-content: center;
-    .name {
-      display: grid;
-      justify-content: center;
-      input {
-        width: 40vw;
-        margin: 0.5rem;
-      }
-    }
   }
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
