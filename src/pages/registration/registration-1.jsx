@@ -5,7 +5,7 @@ import CustomRadioButton from "../../components/custom-radio-button/custom-radio
 import FormatDate from "../../services/dateservice";
 import { useHistory } from "react-router";
 import genderList from "../../data/gender";
-import { auth, firestore } from "../../firebase/firebase.utils";
+import { addUserData, auth, firestore } from "../../firebase/firebase.utils";
 
 //-----StyleSheet-------------
 import "./registration.scss";
@@ -19,23 +19,7 @@ function Registration1() {
   const [selected, setSelected] = useState("");
 
   //--------Methods-------------------
-  const postData = async (data) => {
-    const uid = auth.currentUser.uid;
-    const userRef = firestore.doc(`/users/${uid}`);
-    const snapShot = await userRef.get();
-    if (snapShot.exists) {
-      try {
-        await userRef.set(
-          {
-            ...data,
-          },
-          { merge: true }
-        );
-      } catch (e) {
-        console.log("error creating user", e.message);
-      }
-    }
-  };
+
   const handleSelection = (e) => {
     const { value } = e.target;
     setSelected(value);
@@ -53,7 +37,7 @@ function Registration1() {
         gender: selected,
       };
       try {
-        postData(_data);
+        addUserData(_data);
         history.push("/register2");
       } catch (e) {
         console.log(e.message);
