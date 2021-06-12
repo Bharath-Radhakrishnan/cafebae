@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import CustomInput from "../../components/custom-input/CustomInput";
+import NextButton from "../../components/next-button/NextButton";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import FormatDate from "../../services/dateservice";
 import "./registration.scss";
@@ -85,7 +86,7 @@ function Registration1() {
           selected={selected}
           onClick={handleSelection}
         />
-        <button>Next</button>
+        <NextButton />
       </form>
     </div>
   );
