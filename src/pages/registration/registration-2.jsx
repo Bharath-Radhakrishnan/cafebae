@@ -4,7 +4,7 @@ import { registerActionTypes } from "../../reducers/register/register.types";
 import { useHistory } from "react-router";
 import { useState } from "react";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
-
+import NextButton from "../../components/next-button/NextButton";
 function Registration2() {
   const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
@@ -64,7 +64,8 @@ function Registration2() {
             onChange={handleChange}
           />
         </div>
-        <button>Next</button>
+        {/* <button>Next</button> */}
+        <NextButton />
       </form>
     </div>
   );
