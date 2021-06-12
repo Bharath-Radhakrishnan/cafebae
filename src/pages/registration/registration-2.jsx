@@ -4,7 +4,7 @@ import { useRef } from "react";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
 import CustomInput from "../../components/custom-input/CustomInput";
 import NextButton from "../../components/next-button/NextButton";
-import { auth, firestore } from "../../firebase/firebase.utils";
+import { addUserData, auth, firestore } from "../../firebase/firebase.utils";
 function Registration2() {
   const history = useHistory();
 
@@ -31,7 +31,6 @@ function Registration2() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
-    console.log(isValid);
     if (isValid) {
       const linkedInURL = linkedInRef.current.value;
       const phoneNo = phoneNoRef.current.value;
@@ -40,7 +39,7 @@ function Registration2() {
         phoneNo,
       };
       try {
-        postData(_data);
+        addUserData(_data);
         history.push("/register3");
       } catch (e) {
         console.log(e);
