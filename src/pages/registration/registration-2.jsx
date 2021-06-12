@@ -11,23 +11,6 @@ function Registration2() {
   const linkedInRef = useRef();
   const phoneNoRef = useRef();
   //--------Methods-------------------
-  const postData = async (data) => {
-    const uid = auth.currentUser.uid;
-    const userRef = firestore.doc(`/users/${uid}`);
-    const snapShot = await userRef.get();
-    if (snapShot.exists) {
-      try {
-        await userRef.set(
-          {
-            ...data,
-          },
-          { merge: true }
-        );
-      } catch (e) {
-        console.log("error creating user", e.message);
-      }
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
@@ -59,7 +42,7 @@ function Registration2() {
   return (
     <div className="registration-container">
       <h1>We would like to verify it's you</h1>
-      <form className="input-form" onSubmit={handleSubmit}>
+      <form className="input-form" onSubmit={handleSubmit} autoComplete="off">
         <div className="name">
           <CustomInput
             type="text"
