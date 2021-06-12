@@ -17,6 +17,13 @@ function Dashboard(props) {
   );
   const isRegistered = userSnapshot?.data().isRegistered;
   if (load) return <CustomLoader />;
+  if (error)
+    return (
+      <div>
+        <h1>Sorry</h1>
+        <p>Something went wrong</p>
+      </div>
+    );
   if (isRegistered) {
     const { userName } = userSnapshot?.data();
     return (
