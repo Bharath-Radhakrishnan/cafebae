@@ -2,7 +2,6 @@ import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { Redirect } from "react-router";
-// import { Loader, Dimmer, Segment, Image } from "semantic-ui-react";
 import CustomLoader from "../../components/custom-loader/CustomLoader";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
