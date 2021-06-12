@@ -1,7 +1,7 @@
 import React, { useState } from "react";
+import CustomInput from "../../components/custom-input/CustomInput";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import FormatDate from "../../services/dateservice";
-import Loader from "react-loader-spinner";
 import "./registration.scss";
 import { useStateValue } from "../../StateProvider";
 import { registerActionTypes } from "../../reducers/register/register.types";
@@ -58,21 +58,21 @@ function Registration1() {
   return (
     <div className="registration-container">
       <h1>Let's Start with the Basics</h1>
-      <form className="input-form" onSubmit={handleSubmit}>
+      <form className="input-form" onSubmit={handleSubmit} autoComplete="off">
         <div className="name">
-          <label htmlFor="name">What is your name?</label>
-          <input
+          <CustomInput
             type="text"
             placeholder="name"
+            label="What is your name?"
             name="name"
             id="name"
             value={name}
             onChange={handleChange}
           />
-          <label htmlFor="dob">Date of Birth</label>
-          <input
+          <CustomInput
             type="date"
             placeholder="dob"
+            label="Date of Birth"
             name="dob"
             id="dob"
             value={dob}
