@@ -1,44 +1,59 @@
 import "./registration.scss";
-import { useStateValue } from "../../StateProvider";
-import { registerActionTypes } from "../../reducers/register/register.types";
 import { useHistory } from "react-router";
-import { useState } from "react";
+import { useRef } from "react";
 import isMobilePhone from "validator/es/lib/isMobilePhone";
+import CustomInput from "../../components/custom-input/CustomInput";
 import NextButton from "../../components/next-button/NextButton";
+import { auth, firestore } from "../../firebase/firebase.utils";
 function Registration2() {
-  const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
 
-  const [{ linkedInURL, phoneNo }, setData] = useState({
-    linkedInURL: "",
-    phoneNo: "",
-  });
+  const linkedInRef = useRef();
+  const phoneNoRef = useRef();
   //--------Methods-------------------
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevState) => {
-      return { ...prevState, [name]: value };
-    });
+  const postData = async (data) => {
+    const uid = auth.currentUser.uid;
+    const userRef = firestore.doc(`/users/${uid}`);
+    const snapShot = await userRef.get();
+    if (snapShot.exists) {
+      try {
+        await userRef.set(
+          {
+            ...data,
+          },
+          { merge: true }
+        );
+      } catch (e) {
+        console.log("error creating user", e.message);
+      }
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
     console.log(isValid);
     if (isValid) {
-      dispatch({
-        type: registerActionTypes.ADD_REGISTER_DATA,
-        payload: {
-          linkedInURL,
-          phoneNo,
-        },
-      });
-      history.push("/register3");
+      const linkedInURL = linkedInRef.current.value;
+      const phoneNo = phoneNoRef.current.value;
+      const _data = {
+        linkedInURL,
+        phoneNo,
+      };
+      try {
+        postData(_data);
+        history.push("/register3");
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   const validate = () => {
     let isValid = true;
-    if (linkedInURL === "") isValid = false;
-    if (phoneNo === "" || !isMobilePhone(phoneNo)) isValid = false;
+    const linkedInURL = linkedInRef.current.value;
+    const phoneNo = phoneNoRef.current.value;
+
+    if (!linkedInURL) isValid = false;
+    if (!phoneNo || !isMobilePhone(phoneNo)) isValid = false;
     return isValid;
   };
   //--------Render---------------------
@@ -47,24 +62,19 @@ function Registration2() {
       <h1>We would like to verify it's you</h1>
       <form className="input-form" onSubmit={handleSubmit}>
         <div className="name">
-          <label htmlFor="name">Your LinkedIn URL</label>
-          <input
+          <CustomInput
             type="text"
-            name="linkedInURL"
+            label="Your LinkedIn URL"
             id="linkedInURL"
-            value={linkedInURL}
-            onChange={handleChange}
+            ref={linkedInRef}
           />
-          <label htmlFor="phone">Phone number</label>
-          <input
+          <CustomInput
             type="number"
-            name="phoneNo"
+            label="Phone number"
             id="phoneNo"
-            value={phoneNo}
-            onChange={handleChange}
+            ref={phoneNoRef}
           />
         </div>
-        {/* <button>Next</button> */}
         <NextButton />
       </form>
     </div>
