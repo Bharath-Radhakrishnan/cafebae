@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { Redirect } from "react-router";
 // import { Loader, Dimmer, Segment, Image } from "semantic-ui-react";
-import Loader from "react-loader-spinner";
+import CustomLoader from "../../components/custom-loader/CustomLoader";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { firestore, auth } from "../../firebase/firebase.utils";
@@ -17,7 +17,7 @@ function Dashboard(props) {
     firestore.collection("users").doc(user?.uid)
   );
   const isRegistered = userSnapshot?.data().isRegistered;
-  if (load) return <h1>Loading</h1>;
+  if (load) return <CustomLoader />;
   if (isRegistered) {
     const { userName } = userSnapshot?.data();
     return (
@@ -32,7 +32,7 @@ function Dashboard(props) {
           <TabPanel className="custom-tab-panel">
             <Meetings />
           </TabPanel>
-          <TabPanel lassName="custom-tab-panel">
+          <TabPanel className="custom-tab-panel">
             <AccountSettings />
           </TabPanel>
         </Tabs>
