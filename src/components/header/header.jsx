@@ -7,15 +7,15 @@ function Header() {
   const [{ user }] = useStateValue();
 
   return (
-    <div class="nav">
+    <div className="nav">
       <input type="checkbox" id="nav-check" />
-      <div class="nav-header">
-        <div class="nav-title">Bae Area Club</div>
+      <div className="nav-header">
+        <div className="nav-title">Bae Area Club</div>
       </div>
 
       {/* //--------HamBurger-Menu-Buton--------------- */}
-      <div class="nav-btn">
-        <label for="nav-check">
+      <div className="nav-btn">
+        <label htmlFor="nav-check">
           <span></span>
           <span></span>
           <span></span>
@@ -23,7 +23,7 @@ function Header() {
       </div>
       {/* //--------HamBurger-Menu-Buton--------------- */}
 
-      <div class="nav-links">
+      <div className="nav-links">
         <Link to="/" className="options">
           HOME
         </Link>{" "}
