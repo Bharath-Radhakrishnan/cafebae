@@ -1,18 +1,14 @@
 import React from "react";
-import { auth, signInWithGoogle } from "../../firebase/firebase.utils";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 import { useHistory } from "react-router-dom";
-
-import { Redirect } from "react-router-dom";
-import { useStateValue } from "../../StateProvider";
 
 import "./login.scss";
 function Login() {
-  const [{ user }] = useStateValue();
   const history = useHistory();
   const signIn = async () => {
     const auth = await signInWithGoogle();
     if (auth) {
-      history.push("/dashboard");
+      history.replace("/dashboard");
     }
   };
   return (
