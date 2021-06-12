@@ -1,31 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import CustomInput from "../../components/custom-input/CustomInput";
 import NextButton from "../../components/next-button/NextButton";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import FormatDate from "../../services/dateservice";
-import "./registration.scss";
-import { useStateValue } from "../../StateProvider";
-import { registerActionTypes } from "../../reducers/register/register.types";
 import { useHistory } from "react-router";
 import genderList from "../../data/gender";
+import { auth, firestore } from "../../firebase/firebase.utils";
+//-----StyleSheet-------------
+import "./registration.scss";
+
 function Registration1() {
-  const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
   const items = genderList;
   //-------------State-Variables--------------------------
-  const [{ name, dob }, setData] = useState({ name: "", dob: "" });
+  const nameRef = useRef();
+  const dobRef = useRef();
   const [selected, setSelected] = useState("");
 
   //--------Methods-------------------
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setData((prevState) => {
-      if (name === "") {
-        let date = FormatDate(value);
-        return { ...prevState, dob: date };
-      } else return { ...prevState, [name]: value };
-    });
+  const postData = async (data) => {
+    const uid = auth.currentUser.uid;
+    const userRef = firestore.doc(`/users/${uid}`);
+    const snapShot = await userRef.get();
+    if (snapShot.exists) {
+      try {
+        await userRef.set(
+          {
+            ...data,
+          },
+          { merge: true }
+        );
+      } catch (e) {
+        console.log("error creating user", e.message);
+      }
+    }
   };
   const handleSelection = (e) => {
     const { value } = e.target;
@@ -34,23 +42,31 @@ function Registration1() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
+    const name = nameRef.current.value;
+    const dob = dobRef.current.value;
+    console.log("buhaha", name, dob, isValid);
+
     if (isValid) {
-      dispatch({
-        type: registerActionTypes.ADD_REGISTER_DATA,
-        payload: {
-          userName: name,
-          dob: dob,
-          gender: selected,
-        },
-      });
-      history.push("/register2");
+      const _data = {
+        userName: name,
+        dob: FormatDate(dob),
+        gender: selected,
+      };
+      try {
+        postData(_data);
+        history.push("/register2");
+      } catch (e) {
+        console.log(e.message);
+      }
     }
   };
 
   const validate = () => {
+    const name = nameRef.current.value;
+    const dob = dobRef.current.value;
     let isValid = true;
-    if (name === "") isValid = false;
-    if (dob === "") isValid = false;
+    if (!name) isValid = false;
+    if (!dob) isValid = false;
     if (selected === "") isValid = false;
     return isValid;
   };
@@ -63,12 +79,11 @@ function Registration1() {
         <div className="name">
           <CustomInput
             type="text"
-            placeholder="name"
+            placeholder="Name"
             label="What is your name?"
             name="name"
             id="name"
-            value={name}
-            onChange={handleChange}
+            ref={nameRef}
           />
           <CustomInput
             type="date"
@@ -76,8 +91,7 @@ function Registration1() {
             label="Date of Birth"
             name="dob"
             id="dob"
-            value={dob}
-            onChange={handleChange}
+            ref={dobRef}
           />
         </div>
         <label>Gender</label>
