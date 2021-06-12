@@ -6,6 +6,7 @@ import FormatDate from "../../services/dateservice";
 import { useHistory } from "react-router";
 import genderList from "../../data/gender";
 import { auth, firestore } from "../../firebase/firebase.utils";
+
 //-----StyleSheet-------------
 import "./registration.scss";
 
@@ -44,7 +45,6 @@ function Registration1() {
     const isValid = validate();
     const name = nameRef.current.value;
     const dob = dobRef.current.value;
-    console.log("buhaha", name, dob, isValid);
 
     if (isValid) {
       const _data = {
