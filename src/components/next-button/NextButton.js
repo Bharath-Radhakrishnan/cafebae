@@ -3,14 +3,14 @@ import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import "./NextButton.scss";
 function NextButton() {
   return (
-    <div class="btn-container">
+    <div className="btn-container">
       <button className="nextButton">
-        <span class="text">Next</span>
-        <div class="icon-container">
-          <div class="icon icon--left">
+        <span className="text">Next</span>
+        <div className="icon-container">
+          <div className="icon icon--left">
             <ArrowBackIosIcon />
           </div>
-          <div class="icon icon--right">
+          <div className="icon icon--right">
             <DoubleArrowIcon />
           </div>
         </div>
