@@ -1,74 +1,78 @@
 import "./registration.scss";
 import { useHistory } from "react-router";
-import { useStateValue } from "../../StateProvider";
-import { useState } from "react";
-import { registerActionTypes } from "../../reducers/register/register.types";
+import { useRef } from "react";
+import NextButton from "../../components/next-button/NextButton";
+import CustomInput from "../../components/custom-input/CustomInput";
+import { addUserData } from "../../firebase/firebase.utils";
 
 function Registration3() {
-  const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
 
-  const [{ place, nativePlace, occupation }, setData] = useState({ place: "" });
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevState) => {
-      return { ...prevState, [name]: value };
-    });
-  };
+  const placeRef = useRef();
+  const nativePlaceRef = useRef();
+  const occupationRef = useRef();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const isValid = validate();
     if (isValid) {
-      dispatch({
-        type: registerActionTypes.ADD_REGISTER_DATA,
-        payload: {
-          place,
-          nativePlace,
-          occupation,
-        },
-      });
-      history.push("/register4");
+      const place = placeRef.current.value;
+      const nativePlace = nativePlaceRef.current.value;
+      const occupation = occupationRef.current.value;
+      const _data = {
+        place,
+        nativePlace,
+        occupation,
+      };
+      try {
+        addUserData(_data);
+        history.push("/register4");
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   const validate = () => {
     let isValid = true;
-    if (place === "") isValid = false;
-    if (nativePlace === "") isValid = false;
-    if (occupation === "") isValid = false;
+    const place = placeRef.current.value;
+    const nativePlace = nativePlaceRef.current.value;
+    const occupation = occupationRef.current.value;
+    if (!place) isValid = false;
+    if (!nativePlace) isValid = false;
+    if (!occupation) isValid = false;
     return isValid;
   };
   return (
     <div className="registration-container">
       <h1>Your location details</h1>
-      <form className="input-form" onSubmit={handleSubmit}>
+      <form className="input-form" autoComplete="off" onSubmit={handleSubmit}>
         <div className="name">
-          <label htmlFor="name">Based out of</label>
-          <input
+          <CustomInput
             type="text"
+            label="Based out of"
             placeholder="Location"
             name="place"
             id="Place"
-            value={place}
-            onChange={handleChange}
+            ref={placeRef}
           />
-          <label htmlFor="phone">Grew up here</label>
-          <input
+
+          <CustomInput
             type="text"
+            label="Grew up here"
             placeholder="Location"
             name="nativePlace"
             id="nativePlace"
-            value={nativePlace}
-            onChange={handleChange}
+            ref={nativePlaceRef}
           />
-          <label htmlFor="phone">What do you do for a living?</label>
-          <input
+          <CustomInput
             type="text"
+            label="What do you do for a living?"
             placeholder="ex: product consultant"
             name="occupation"
             id="occupation"
-            value={occupation}
-            onChange={handleChange}
+            ref={occupationRef}
           />
+
           <h4>Popular Choices</h4>
           <p>
             <span>#Product</span>
@@ -84,8 +88,7 @@ function Registration3() {
             <span>#Business </span>
           </p>
         </div>
-
-        <button>Next</button>
+        <NextButton />
       </form>
     </div>
   );
