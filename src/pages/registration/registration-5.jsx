@@ -1,95 +1,80 @@
 import "./registration.scss";
 import { useHistory } from "react-router";
-import { useStateValue } from "../../StateProvider";
 import CustomRadioButton from "../../components/custom-radio-button/custom-radio-button";
 import genderList from "../../data/gender";
-import { useState } from "react";
-import { auth, firestore } from "../../firebase/firebase.utils";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useState, useRef } from "react";
+import { addUserData } from "../../firebase/firebase.utils";
+import CustomInput from "../../components/custom-input/CustomInput";
+import NextButton from "../../components/next-button/NextButton";
 
 function Registration5() {
   //----------------------Hooks---------------------------------
-  const [{ register }, dispatch] = useStateValue();
   const history = useHistory();
   const items = genderList;
   //-------------------State-Variables-------------------------
-  const [{ age, occupation }, setData] = useState({ age: "", occupation: "" });
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState();
+  const ageRef = useRef();
+  const occupationRef = useRef();
+
   //--------------------Methods--------------------------------
   const handleSelection = (e) => {
     const { value } = e.target;
     setSelected(value);
   };
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevState) => ({ ...prevState, [name]: value }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const age = ageRef.current.value;
+    const occupation = occupationRef.current.value;
     const isValid = validate();
     if (isValid) {
-      let data = register;
-      data = {
-        ...data,
+      const _data = {
         agePreference: age,
         occupationPreference: occupation,
         genderPreference: selected,
+        //----is-Registered-flag-------
+        isRegistered: true,
       };
-      postData(data);
-      history.push("/dashboard");
+      try {
+        addUserData(_data);
+        history.push("/dashboard");
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   const validate = () => {
     let isValid = true;
-    if (age === "") isValid = false;
-    if (occupation === "") isValid = false;
-    if (selected === "") isValid = false;
+    const age = ageRef.current.value;
+    const occupation = occupationRef.current.value;
+    if (!age || age < 18 || age > 50) isValid = false;
+    if (!occupation) isValid = false;
+    if (!selected) isValid = false;
     return isValid;
   };
 
-  const postData = async (data) => {
-    const uid = auth.currentUser.uid;
-    const userRef = firestore.doc(`/users/${uid}`);
-    const snapShot = await userRef.get();
-    if (snapShot.exists) {
-      try {
-        await userRef.set(
-          {
-            ...data,
-            isRegistered: true,
-          },
-          { merge: true }
-        );
-      } catch (e) {
-        console.log("error creating user", e.message);
-      }
-    }
-  };
   return (
     <div className="registration-container">
       <h1>Your Preferences</h1>
-      <form className="input-form" onSubmit={handleSubmit}>
+      <form className="input-form" onSubmit={handleSubmit} autoComplete="off">
         <div className="name">
-          <label htmlFor="age">Age</label>
-          <input
+          <CustomInput
+            label="Age?"
             type="number"
-            min="18"
-            max="100"
             placeholder="age"
             name="age"
             id="age"
-            value={age}
-            onChange={handleChange}
+            min="18"
+            max="50"
+            ref={ageRef}
           />
-          <label htmlFor="bio">Any Preferences regarding your datae</label>
-          <input
+          <CustomInput
+            label="Any Preferences regarding your datae"
             type="text"
             placeholder="ex: #techie #banglore"
             name="occupation"
             id="occupation"
-            value={occupation}
-            onChange={handleChange}
+            ref={occupationRef}
           />
           <h4>Popular Choices</h4>
           <p>
@@ -112,7 +97,7 @@ function Registration5() {
           selected={selected}
           onClick={handleSelection}
         />
-        <button>Submit</button>
+        <NextButton />
       </form>
     </div>
   );

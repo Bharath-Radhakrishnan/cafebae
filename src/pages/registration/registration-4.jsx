@@ -26,7 +26,6 @@ function Registration4() {
     if (isValid) {
       const availability = availabilityRef.current.value;
       const bio = bioRef.current.value;
-      console.log({ selected, availability, bio });
       const _data = {
         settlementYear: selected,
         availability,
