@@ -10,7 +10,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 //---------------Components-------------------------
-import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 //---------------Pages-------------------------
 import Homepage from "./pages/homepage/homepage";
