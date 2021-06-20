@@ -5,7 +5,7 @@ import CustomRadioButton from "../../components/custom-radio-button/custom-radio
 import FormatDate from "../../services/dateservice";
 import { useHistory } from "react-router";
 import genderList from "../../data/gender";
-import { addUserData, auth, firestore } from "../../firebase/firebase.utils";
+import { addUserData } from "../../firebase/firebase.utils";
 
 //-----StyleSheet-------------
 import "./registration.scss";
@@ -84,7 +84,9 @@ function Registration1() {
           selected={selected}
           onClick={handleSelection}
         />
-        <NextButton />
+        <div className="button-container ">
+          <NextButton />
+        </div>
       </form>
     </div>
   );
