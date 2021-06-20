@@ -24,6 +24,7 @@ import Registration2 from "./pages/registration/registration-2";
 import Registration3 from "./pages/registration/registration-3";
 import Registration4 from "./pages/registration/registration-4";
 import Registration5 from "./pages/registration/registration-5";
+import HeaderTailwind from "./components/header-tailwind/HeaderTailwind";
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -54,7 +55,8 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Header />
+        {/* <Header /> */}
+        <HeaderTailwind />
         <Switch>
           <ProtectedRoute
             exact
