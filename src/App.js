@@ -5,7 +5,6 @@ import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { useStateValue } from "./StateProvider";
 import { userActionTypes } from "./reducers/user/user.types";
 //----------------Services------------------------------
-import AuthenticationService from "./services/authenticationservice";
 //------------Stylesheet--------------------------------
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
