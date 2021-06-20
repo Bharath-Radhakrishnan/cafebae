@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.2",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.9",
@@ -24,9 +25,10 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "build:tailwindcss": "postcss src/index.css -o src/assets/css/tailwind.css",
+    "watch:tailwindcss": "postcss src/index.css -o src/assets/css/tailwind.css -w",
+    "start": "npm run build:tailwindcss && craco start",
+    "build": "npm run build:tailwindcss && craco build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,6 +52,7 @@
   "devDependencies": {
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.36",
+    "postcss-cli": "^7.1.2",
     "sass": "^1.35.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2"
   }
