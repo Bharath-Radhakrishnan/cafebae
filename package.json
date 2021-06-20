@@ -25,10 +25,8 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "build:tailwindcss": "postcss src/index.css -o src/assets/css/tailwind.css",
-    "watch:tailwindcss": "postcss src/index.css -o src/assets/css/tailwind.css -w",
-    "start": "npm run build:tailwindcss && craco start",
-    "build": "npm run build:tailwindcss && craco build",
+    "start": "craco start",
+    "build": "craco build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,8 +49,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^9.8.6",
-    "postcss": "^7.0.36",
-    "postcss-cli": "^7.1.2",
     "sass": "^1.35.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.2"
   }
