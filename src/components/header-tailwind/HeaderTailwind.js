@@ -85,7 +85,7 @@ export default function HeaderTailwind() {
 
                 {/* Profile dropdown */}
                 {user?.currentUser ? (
-                  <CustomMenu user={user.current} />
+                  <CustomMenu userName={user.currentUser.userName} />
                 ) : (
                   <Link
                     to="/login"
@@ -138,7 +138,7 @@ export default function HeaderTailwind() {
   );
 }
 
-const CustomMenu = ({ user }) => {
+const CustomMenu = ({ userName }) => {
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
@@ -172,28 +172,15 @@ const CustomMenu = ({ user }) => {
             >
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href="/"
+                  <Link
+                    to="/dashboard"
                     className={classNames(
                       active ? "bg-gray-100" : "",
                       "block px-4 py-2 text-sm text-gray-700"
                     )}
                   >
-                    Your Profile
-                  </a>
-                )}
-              </Menu.Item>
-              <Menu.Item>
-                {({ active }) => (
-                  <a
-                    href="/"
-                    className={classNames(
-                      active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
-                    )}
-                  >
-                    {user ? user : "No One"}
-                  </a>
+                    {userName && userName}'s Profile
+                  </Link>
                 )}
               </Menu.Item>
               <Menu.Item>
@@ -202,7 +189,7 @@ const CustomMenu = ({ user }) => {
                     onClick={() => auth.signOut()}
                     className={classNames(
                       active ? "bg-gray-100" : "",
-                      "block px-4 py-2 text-sm text-gray-700"
+                      "block px-4 py-2 text-sm text-gray-700 cursor-pointer	"
                     )}
                   >
                     Sign out
