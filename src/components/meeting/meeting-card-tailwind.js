@@ -10,7 +10,7 @@ function MeetingCardTailwind() {
         width={384}
         height={512}
       />
-      <div className="pt-6 md:p-8 pr-16 text-left md:text-left space-y-4">
+      <div className="pt-6 md:p-8 text-left md:text-left space-y-4">
         <div className="text-cyan-600">
           <h5>Sarah Dayan</h5>
         </div>
