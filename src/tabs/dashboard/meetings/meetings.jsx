@@ -1,15 +1,14 @@
-import MeetingCard from "../../../components/meeting/meeting-card";
+import MeetingCardTailwind from "../../../components/meeting/meeting-card-tailwind";
 
 function Meetings() {
   return (
     <div>
-      <h2>Any content 1</h2>
-      List View
+      <h2>Upcoming Meetings</h2>
       <div>
-        <MeetingCard />
-        <MeetingCard />
-        <MeetingCard />
-        <MeetingCard />
+        <MeetingCardTailwind />
+        <MeetingCardTailwind />
+        <MeetingCardTailwind />
+        <MeetingCardTailwind />
       </div>
     </div>
   );
