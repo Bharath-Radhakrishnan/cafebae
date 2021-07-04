@@ -11,32 +11,23 @@ function AccountSettings() {
   );
   //   const isRegistered = userSnapshot?.data().isRegistered;
   if (load) return <h1>Loading</h1>;
-  const {
-    userName,
-    email,
-    gender,
-    linkedInURL,
-    phoneNo,
-    occupation,
-  } = userSnapshot?.data();
+  const { userName, email, gender, linkedInURL, phoneNo, occupation } =
+    userSnapshot?.data();
   return (
     <div className="account-settings-container">
       <Tabs className="account-settings-tab">
         <TabList>
           <Tab>
-            <p>Title 1</p>
+            <p>Basic</p>
           </Tab>
           <Tab>
-            <p>Title 2</p>
+            <p>Location</p>
           </Tab>
           <Tab>
-            <p>Title 3</p>
+            <p>Preferences</p>
           </Tab>
           <Tab>
-            <p>Title 4</p>
-          </Tab>
-          <Tab>
-            <p>Title 5</p>
+            <p>Availability</p>
           </Tab>
         </TabList>
 
@@ -77,11 +68,6 @@ function AccountSettings() {
         <TabPanel>
           <div className="panel-content">
             <h2>Any content 4</h2>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Any content 5</h2>
           </div>
         </TabPanel>
       </Tabs>
