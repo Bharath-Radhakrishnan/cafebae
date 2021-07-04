@@ -24,6 +24,7 @@ import Registration3 from "./pages/registration/registration-3";
 import Registration4 from "./pages/registration/registration-4";
 import Registration5 from "./pages/registration/registration-5";
 import HeaderTailwind from "./components/header-tailwind/HeaderTailwind";
+import SettingsPage from "./pages/settings/settings";
 
 function App() {
   const [{}, dispatch] = useStateValue();
@@ -87,6 +88,7 @@ function App() {
             path="/dashboard"
             component={Dashboard}
           ></ProtectedRoute>
+          <Route exact path="/settings" component={SettingsPage}></Route>
           <Route exact path="/login" component={Login}></Route>
           <Route exact path="/about" component={About}></Route>
           <Route exact path="/" component={Homepage}></Route>
