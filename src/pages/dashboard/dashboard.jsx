@@ -27,21 +27,26 @@ function Dashboard(props) {
   if (isRegistered) {
     const { userName } = userSnapshot?.data();
     return (
-      <div className="dashboard">
-        <h1>{userName}'s dashboard</h1>
-        <Tabs>
+      <div className="dashboard-container lg:mx-60 mt-4 mb-12">
+        <h1>Aloha {userName}</h1>
+        <h4>
+          We are excited to match you with interesting folks this weekend 😀
+        </h4>
+        <Meetings />
+
+        {/* <Tabs>
           <TabList>
             <Tab>Meetings</Tab>
             <Tab>Account Preferences</Tab>
           </TabList>
 
-          <TabPanel className="custom-tab-panel">
-            <Meetings />
+          <TabPanel className="custom-tab-panel"> */}
+        {/* <Meetings />
           </TabPanel>
           <TabPanel className="custom-tab-panel">
             <AccountSettings />
           </TabPanel>
-        </Tabs>
+        </Tabs> */}
       </div>
     );
   } else {
