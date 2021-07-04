@@ -1,78 +1,79 @@
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import TabPanel from "../../../components/tab-panel/TabPanel";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDocument } from "react-firebase-hooks/firestore";
 import { auth, firestore } from "../../../firebase/firebase.utils";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "./account-settings.scss";
-function AccountSettings() {
+function a11yProps(index) {
+  return {
+    id: `vertical-tab-${index}`,
+    "aria-controls": `vertical-tabpanel-${index}`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+    display: "flex",
+    height: "100vh",
+  },
+  tabs: {
+    borderRight: `1px solid ${theme.palette.divider}`,
+  },
+}));
+
+export default function AccountSettings() {
+  const classes = useStyles();
+  const [value, setValue] = useState(0);
+
   const [user] = useAuthState(auth);
 
   const [userSnapshot, load, error] = useDocument(
     firestore.collection("users").doc(user?.uid)
   );
-  //   const isRegistered = userSnapshot?.data().isRegistered;
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   if (load) return <h1>Loading</h1>;
   const { userName, email, gender, linkedInURL, phoneNo, occupation } =
     userSnapshot?.data();
   return (
-    <div className="account-settings-container">
-      <Tabs className="account-settings-tab">
-        <TabList>
-          <Tab>
-            <p>Basic</p>
-          </Tab>
-          <Tab>
-            <p>Location</p>
-          </Tab>
-          <Tab>
-            <p>Preferences</p>
-          </Tab>
-          <Tab>
-            <p>Availability</p>
-          </Tab>
-        </TabList>
-
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Any content 1</h2>
-            <table>
-              <tbody>
-                <tr>
-                  <td>userName:{userName}</td>
-                </tr>
-                <tr>
-                  <td>email:{email}</td>
-                </tr>
-                <tr>
-                  <td>linkedin:{linkedInURL}</td>
-                </tr>
-                <tr>
-                  <td>phoneno:{phoneNo}</td>
-                </tr>
-                <tr>
-                  <td>occupation:{occupation}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Any content 2</h2>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Any content 3</h2>
-          </div>
-        </TabPanel>
-        <TabPanel>
-          <div className="panel-content">
-            <h2>Any content 4</h2>
-          </div>
-        </TabPanel>
+    <div className={classes.root}>
+      <Tabs
+        orientation="vertical"
+        value={value}
+        onChange={handleChange}
+        aria-label="Vertical tabs example"
+        className={classes.tabs}
+      >
+        <Tab label="Basic" {...a11yProps(0)} />
+        <Tab label="Location" {...a11yProps(1)} />
+        <Tab label="Preferences" {...a11yProps(2)} />
+        <Tab label="Availability" {...a11yProps(3)} />
       </Tabs>
+      <TabPanel value={value} index={0}>
+        Item One
+        {userName}
+        {email}
+        {gender}
+        {linkedInURL}
+        {phoneNo}
+        {occupation}
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Item Four
+      </TabPanel>
     </div>
   );
 }
-
-export default AccountSettings;
