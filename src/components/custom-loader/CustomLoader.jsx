@@ -1,8 +1,8 @@
 import Loader from "react-loader-spinner";
-
+import "./CustomLoader.scss";
 function CustomLoader() {
   return (
-    <div>
+    <div className="loader-container">
       <Loader
         type="Puff"
         color="#00BFFF"
