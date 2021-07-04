@@ -27,9 +27,9 @@ function Dashboard(props) {
   if (isRegistered) {
     const { userName } = userSnapshot?.data();
     return (
-      <div className="dashboard-container lg:mx-60 mt-4 mb-12">
+      <div className="mx-6 mt-4 mb-12 md:mx-60">
         <h1>Aloha {userName}</h1>
-        <h4>
+        <h4 className="mb-12">
           We are excited to match you with interesting folks this weekend 😀
         </h4>
         <Meetings />
