@@ -185,6 +185,19 @@ const CustomMenu = ({ userName }) => {
               </Menu.Item>
               <Menu.Item>
                 {({ active }) => (
+                  <Link
+                    to="/settings"
+                    className={classNames(
+                      active ? "bg-gray-100" : "",
+                      "block px-4 py-2 text-sm text-gray-700"
+                    )}
+                  >
+                    Account Settings
+                  </Link>
+                )}
+              </Menu.Item>
+              <Menu.Item>
+                {({ active }) => (
                   <div
                     onClick={() => auth.signOut()}
                     className={classNames(
