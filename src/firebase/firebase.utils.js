@@ -50,7 +50,8 @@ export const addUserData = async (data) => {
     }
   }
 };
-firebase.initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
@@ -58,4 +59,42 @@ export const firestore = firebase.firestore();
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+//-------------Gapi----------------------
+var gapi = window.gapi;
+export const gapiSignIn = () => {
+  // var gapi = window.gapi;
+
+  var CLIENT_ID =
+    "827505988598-ch7qvic7uslgdtuelq6dlp2gqv90okiu.apps.googleusercontent.com";
+
+  var API_KEY = "AIzaSyBnxarhsUZm-VTd1eD_uIILs1Qf0l2Ltg8";
+  var DISCOVERY_DOCS = [
+    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+  ];
+
+  var SCOPES = "https://www.googleapis.com/auth/calendar";
+  gapi.load("client:auth2", async () => {
+    console.log("loaded client");
+
+    gapi.client.init({
+      apiKey: API_KEY,
+      clientId: CLIENT_ID,
+      discoveryDocs: DISCOVERY_DOCS,
+      scope: SCOPES,
+    });
+
+    gapi.client.load("calendar", "v3", () => console.log("bam!"));
+    const result = gapi.auth2.getAuthInstance().isSignedIn.get();
+    console.log(result);
+    gapiLogin();
+    // updateSigninStatus(result);
+  });
+};
+const gapiLogin = async () => {
+  const googleAuth = gapi.auth2.getAuthInstance();
+  const googleUser = await googleAuth.signIn();
+  const token = googleUser.getAuthResponse().id_token;
+  const credential = provider.credential(token);
+  const user = await auth.signInWithCredential(credential);
+};
 export default firebase;
