@@ -1,13 +1,12 @@
 import MeetingCardTailwind from "../../../components/meeting/meeting-card-tailwind";
-
+import meetingList from "../../../data/meetings";
 function Meetings() {
   return (
     <div>
       <div>
-        <MeetingCardTailwind />
-        <MeetingCardTailwind />
-        <MeetingCardTailwind />
-        <MeetingCardTailwind />
+        {meetingList.map((meeting) => {
+          return <MeetingCardTailwind data={meeting} />;
+        })}
       </div>
     </div>
   );

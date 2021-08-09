@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import EventIcon from "@material-ui/icons/Event";
 import ScheduleIcon from "@material-ui/icons/Schedule";
-function MeetingCardTailwind() {
+function MeetingCardTailwind({ data }) {
   var event = {
     summary: "Google I/O 2021",
     location: "800 Howard St., San Francisco, CA 94103",
@@ -130,10 +130,10 @@ function MeetingCardTailwind() {
       />
       <div className="pt-6 md:p-8 text-left">
         <div className="text-cyan-600">
-          <h5>Sarah Dayan</h5>
+          <h5>{data.name}</h5>
         </div>
         <div className="text-gray-500">
-          <p>Staff Engineer, Algolia</p>
+          <p>{data.job}</p>
         </div>
 
         <p className="text-lg font-semibold">
@@ -144,11 +144,11 @@ function MeetingCardTailwind() {
       <div className="pt-6 md:p-8 mr-24 text-left md:flex md:flex-col items-center justify-center">
         <p className="flex">
           <EventIcon />
-          <span>Date</span>
+          <span>{data.date}</span>
         </p>
         <p className="flex">
           <ScheduleIcon />
-          Time
+          {data.time}
         </p>
         <Button onClick={handleClick}>Add Event</Button>
         <Button onClick={listUpcomingEvents}>Out</Button>
