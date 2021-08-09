@@ -35,10 +35,8 @@ function MeetingCardTailwind({ data }) {
   */
   var CLIENT_ID =
     "827505988598-ch7qvic7uslgdtuelq6dlp2gqv90okiu.apps.googleusercontent.com";
-  // var CLIENT_ID =
-  //   "123327700592-c5jm2iong3aeihttjhum8mufcj2q8gj4.apps.googleusercontent.com";
+
   var API_KEY = "AIzaSyBnxarhsUZm-VTd1eD_uIILs1Qf0l2Ltg8";
-  // var API_KEY = "AIzaSyC4W6X32XazWt44W5ukjwD_Mjd5m-SllRU";
   var DISCOVERY_DOCS = [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
   ];
@@ -160,3 +158,7 @@ function MeetingCardTailwind({ data }) {
 }
 
 export default MeetingCardTailwind;
+
+// var CLIENT_ID =
+//   "123327700592-c5jm2iong3aeihttjhum8mufcj2q8gj4.apps.googleusercontent.com";
+// var API_KEY = "AIzaSyC4W6X32XazWt44W5ukjwD_Mjd5m-SllRU";
